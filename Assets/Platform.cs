@@ -17,6 +17,22 @@ public class Platform : MonoBehaviour
         platformType = (PlatformType)Random.Range((int)PlatformType.Right, (int)PlatformType.None);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.collider.transform.SetParent(transform);
+            collision.gameObject.GetComponent<Player>().isJump = false;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.collider.transform.SetParent(null);
+        }
+    }
 
 
 }

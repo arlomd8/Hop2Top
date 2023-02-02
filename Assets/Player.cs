@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [Header("General Attribute")]
     public Transform target;
     public Transform rotator;
+    public Transform destroyer;
 
     [Header("Player Attribute")]
     public int healthPoint;
@@ -23,6 +24,17 @@ public class Player : MonoBehaviour
     public Vector3 worldPos;
     public float duration;
 
+
+    [Header("Destroyer Attribute")]
+    public Vector2 destroyLoc;
+    public Vector3 destroyPos;
+
+    public Transform detectionPoint;
+    private const float detectionRadius = .5f;
+    public LayerMask platLayer;
+
+
+
     private void Start()
     {
         healthPoint = UIManager.instance.hearts.Count;
@@ -30,7 +42,16 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        
+        if (!Alive())
+        {
+            healthPoint--;
+            UIManager.instance.hearts[healthPoint].SetActive(false);
+            GameManager.instance.ResetPlayerPosition();
+
+            if (healthPoint < 1) { UIManager.instance.gameoverPanel.SetActive(true); }
+        }
+
+
         if (isHolding && !isLeft) 
         { 
             target.transform.localPosition += new Vector3(targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime); 
@@ -43,6 +64,7 @@ public class Player : MonoBehaviour
         {
             ResetTarget();  
         }
+
     }
 
     private void FixedUpdate()
@@ -61,11 +83,6 @@ public class Player : MonoBehaviour
             //}
         }
     }
-
-    public static Quaternion LookAtTarget(Vector2 r)
-    {
-        return Quaternion.Euler(0, 0, Mathf.Atan2(r.y, r.x) * Mathf.Rad2Deg);
-    }
     public void Charging()
     {
     }
@@ -77,11 +94,16 @@ public class Player : MonoBehaviour
         DecreaseTargetCount();
     }
     
+    public bool Alive()
+    {
+        return Physics2D.OverlapCircle(detectionPoint.position, detectionRadius, platLayer);
+
+    }
     public void ResetTarget()
     {
         target.transform.localPosition = rotator.localPosition;
     }
-
+    
     public void StartHolding()
     {
         isHolding = true;
@@ -100,6 +122,13 @@ public class Player : MonoBehaviour
             GameManager.instance.targetCount = 0;
         }
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(detectionPoint.position, detectionRadius);
+    }
+
 
 }
 

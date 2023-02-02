@@ -15,12 +15,14 @@ public class GameManager : MonoBehaviour
     public int targetCount;
     public int bonusTarget;
     public int platformCount;
+    public bool isWin;
 
     [Header("PLATFORMS")]
     public List<GameObject> platforms;
     public float yPlatPos;
     public float xPlatPos;
     public GameObject platPrefab;
+    public int lastPlatforms;
 
     [Header("BONUS ITEM")]
     public GameObject itemPrefab;
@@ -47,6 +49,7 @@ public class GameManager : MonoBehaviour
         {
             if (platforms[i].GetComponent<Platform>().isDetectPlayer)
             {
+                lastPlatforms = i;
                 try
                 {
                     if (platforms[i + 1].GetComponent<Platform>().platformType == PlatformType.Right)
@@ -65,11 +68,28 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        if (lastPlatforms == platformCount - 1 && !isWin)
+        {
+            GameWin();
+        }
+    }
+
+    void GameWin()
+    {
+        isWin = true;
+        GameManager.instance.score += 100;
+        UIManager.instance.winPanel.SetActive(true);
     }
 
     void SpawnPlayer()
     {
-        player.gameObject.transform.position = new Vector2(platforms[0].transform.position.x, platforms[0].transform.position.y + 1f);
+        player.gameObject.transform.position = new Vector2(platforms[0].transform.position.x, platforms[0].transform.position.y + .5f);
+    }
+
+    public void ResetPlayerPosition()
+    {
+        player.gameObject.transform.position = new Vector2(platforms[lastPlatforms].transform.position.x, platforms[lastPlatforms].transform.position.y + .5f);
     }
 
     void SpawnItem(int count)

@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI pointText;
     public List<GameObject> hearts;
 
+    public GameObject gameoverPanel;
+    public GameObject winPanel;
+
     private void Awake()
     {
         if(instance == null)

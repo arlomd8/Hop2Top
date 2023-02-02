@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Level 1
   m_EditorClassIdentifier: 
   pillar: 16
-  target: 2
-  bonusTarget: 5
+  target: 5
+  bonusTarget: 3

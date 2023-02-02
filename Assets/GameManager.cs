@@ -10,17 +10,20 @@ public class GameManager : MonoBehaviour
     public LevelData levelData;
     private Player player;
 
+    [Header("LEVEL")]
     public int score;
     public int targetCount;
     public int bonusTarget;
     public int platformCount;
 
-    [Header("Platforms")]
+    [Header("PLATFORMS")]
     public List<GameObject> platforms;
     public float yPlatPos;
     public float xPlatPos;
     public GameObject platPrefab;
-    
+
+    [Header("BONUS ITEM")]
+    public GameObject itemPrefab;
 
     private void Awake()
     {
@@ -29,11 +32,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
+
         AssignLevelData();
         SpawnPlatform(platformCount);
         AddPlatformToList();
-
-        player.gameObject.transform.position = new Vector2(platforms[0].transform.position.x, platforms[0].transform.position.y + 1f);
+        SpawnPlayer();
+        SpawnItem(bonusTarget);
+        
     }
 
     private void Update()
@@ -62,6 +67,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void SpawnPlayer()
+    {
+        player.gameObject.transform.position = new Vector2(platforms[0].transform.position.x, platforms[0].transform.position.y + 1f);
+    }
+
+    void SpawnItem(int count)
+    {
+        int pos = 0;
+        for (int i = 1; i <= count; i++)
+        {
+            var newItem = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+            pos += 5;
+            newItem.transform.position = new Vector2(platforms[pos].transform.position.x, platforms[pos].transform.position.y + .5f);
+        }
+    }
     void AssignLevelData()
     {
         targetCount = levelData.Target;

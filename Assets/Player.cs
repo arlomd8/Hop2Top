@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        
         if (isHolding && !isLeft) 
         { 
             target.transform.localPosition += new Vector3(targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime); 
@@ -73,6 +74,7 @@ public class Player : MonoBehaviour
         aimLoc = target.transform.localPosition;
         worldPos = transform.localToWorldMatrix.MultiplyPoint3x4(aimLoc);
         transform.position = worldPos;
+        DecreaseTargetCount();
     }
     
     public void ResetTarget()
@@ -90,7 +92,14 @@ public class Player : MonoBehaviour
         isHolding = false;
     }
 
-
+    public void DecreaseTargetCount()
+    {
+        GameManager.instance.targetCount -= 1;
+        if (GameManager.instance.targetCount < 0)
+        {
+            GameManager.instance.targetCount = 0;
+        }
+    }
 
 }
 

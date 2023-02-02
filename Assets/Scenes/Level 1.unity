@@ -458,6 +458,7 @@ MonoBehaviour:
   yPlatPos: -3
   xPlatPos: 0
   platPrefab: {fileID: 4170111869202826121, guid: 43e14026c27520d4f9578004247d7c3e, type: 3}
+  itemPrefab: {fileID: 3552327105512279089, guid: 3730763bf865f3341a41442dfffcdc8a, type: 3}
 --- !u!4 &637916823
 Transform:
   m_ObjectHideFlags: 0
@@ -1216,7 +1217,7 @@ MonoBehaviour:
   rotator: {fileID: 745590286}
   healthPoint: 0
   isLeft: 0
-  targetSpeed: 3
+  targetSpeed: 2
   isHolding: 0
   isJump: 0
   aimLoc: {x: 0, y: 0}
@@ -1645,6 +1646,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1853999462}
   - component: {fileID: 1853999463}
+  - component: {fileID: 1853999464}
   m_Layer: 0
   m_Name: Target
   m_TagString: Untagged
@@ -1719,6 +1721,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1853999464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853999461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63a73c3a19ecf1c47adf63f5193dbe45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1959571170
 GameObject:
   m_ObjectHideFlags: 0

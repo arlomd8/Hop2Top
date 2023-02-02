@@ -24,4 +24,11 @@ public class UIManager : MonoBehaviour
         targetText.text = GameManager.instance.targetCount.ToString();
         pointText.text = GameManager.instance.score.ToString();
     }
+
+
+    private void Update()
+    {
+        targetText.text = GameManager.instance.targetCount.ToString();
+        pointText.text = GameManager.instance.score.ToString();
+    }
 }

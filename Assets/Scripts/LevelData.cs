@@ -19,7 +19,7 @@ public class LevelData : ScriptableObject
 
     public int Pillar
     {
-        get { return Pillar; }
+        get { return pillar; }
     }
     public int Target
     {

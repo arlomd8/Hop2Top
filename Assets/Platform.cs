@@ -5,17 +5,8 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
     public PlatformType platformType;
+    public bool isDetectPlayer;
 
-    private void Start()
-    {
-        //RandomEnum();
-        
-    }
-
-    void RandomEnum()
-    {
-        platformType = (PlatformType)Random.Range((int)PlatformType.Right, (int)PlatformType.None);
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -23,7 +14,9 @@ public class Platform : MonoBehaviour
         {
             collision.collider.transform.SetParent(transform);
             collision.gameObject.GetComponent<Player>().isJump = false;
+            isDetectPlayer = true;
         }
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -31,6 +24,7 @@ public class Platform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.collider.transform.SetParent(null);
+            isDetectPlayer = false;
         }
     }
 

@@ -1,6 +1,9 @@
+using System.Buffers.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
@@ -9,9 +12,7 @@ public class Player : MonoBehaviour
     public Transform rotator;
 
     [Header("Player Attribute")]
-    public int maxHealth;
     public int healthPoint;
-    public int score;
     public bool isLeft;
 
     [Header("Target Attribute")]
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        healthPoint = maxHealth;
+        healthPoint = UIManager.instance.hearts.Count;
     }
 
     private void Update()
@@ -41,10 +42,15 @@ public class Player : MonoBehaviour
         {
             ResetTarget();  
         }
+    }
 
+    private void FixedUpdate()
+    {
         if (isJump)
         {
-            transform.position = Vector2.MoveTowards(transform.position, worldPos, 10 * Time.deltaTime);
+            //transform.position = new Vector2(transform.position, worldPos, 10 * Time.deltaTime);
+            
+
             //duration += Time.deltaTime;
             //duration = duration % 5f;
 
@@ -52,20 +58,21 @@ public class Player : MonoBehaviour
             //{
             //    transform.position = MathParabola.Parabola(transform.position, worldPos, 0.5f, duration / 1f);
             //}
-             
         }
+    }
 
-    }   
+    public static Quaternion LookAtTarget(Vector2 r)
+    {
+        return Quaternion.Euler(0, 0, Mathf.Atan2(r.y, r.x) * Mathf.Rad2Deg);
+    }
     public void Charging()
     {
-        print("charging");
     }
     public void Jump()
     {
-        print("jump");
         aimLoc = target.transform.localPosition;
         worldPos = transform.localToWorldMatrix.MultiplyPoint3x4(aimLoc);
-        isJump = true;
+        transform.position = worldPos;
     }
     
     public void ResetTarget()
@@ -83,4 +90,7 @@ public class Player : MonoBehaviour
         isHolding = false;
     }
 
+
+
 }
+

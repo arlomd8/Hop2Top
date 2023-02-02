@@ -1,13 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public LevelData levelData;
+    private Player player;
 
+    public int score;
+    public int targetCount;
+    public int bonusTarget;
+    public int platformCount;
+
+    [Header("Platforms")]
     public List<GameObject> platforms;
+    public float yPlatPos;
+    public float xPlatPos;
+    public GameObject platPrefab;
     
 
     private void Awake()
@@ -16,10 +28,46 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        //Spawn Platform
+        player = FindObjectOfType<Player>();
+        AssignLevelData();
+        SpawnPlatform(platformCount);
         AddPlatformToList();
+
+        player.gameObject.transform.position = new Vector2(platforms[0].transform.position.x, platforms[0].transform.position.y + 1f);
     }
 
+    private void Update()
+    {
+        for(int i = 0; i < platforms.Count; i++)
+        {
+            if (platforms[i].GetComponent<Platform>().isDetectPlayer)
+            {
+                try
+                {
+                    if (platforms[i + 1].GetComponent<Platform>().platformType == PlatformType.Right)
+                    {
+                        player.isLeft = false;
+                    }
+                    else
+                    {
+                        player.isLeft = true;
+                    }
+                }
+                catch(ArgumentOutOfRangeException)
+                {
+                    //Menang Cuy 
+                    continue;
+                }
+            }
+        }
+    }
+
+    void AssignLevelData()
+    {
+        targetCount = levelData.Target;
+        bonusTarget = levelData.BonusTarget;
+        platformCount = levelData.Pillar;
+    }
     void AddPlatformToList()
     {
         foreach(GameObject g in GameObject.FindGameObjectsWithTag("Plat"))
@@ -28,7 +76,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SpawnPlatform() { }
+    public void SpawnPlatform(int count) 
+    { 
 
+        for(int i = 0; i < count; i++)
+        {
+            var newPlat = Instantiate(platPrefab, transform.position, Quaternion.identity);
+            
+            int x = Random.Range((int)PlatformType.Right, (int)PlatformType.None);
 
+            if(x == (int)(PlatformType.Right))
+            {
+                newPlat.transform.position = new Vector3(xPlatPos += 1.5f, yPlatPos, 0);
+                newPlat.GetComponent<Platform>().platformType = PlatformType.Right;
+            }
+            else
+            {
+                newPlat.transform.position = new Vector3(xPlatPos -= 1.5f, yPlatPos, 0);
+                newPlat.GetComponent<Platform>().platformType = PlatformType.Left;
+            }
+            yPlatPos += 1.5f;
+        }
+    }
 }

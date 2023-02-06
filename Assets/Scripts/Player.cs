@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
 
         if (isHolding)
         {
+            target.gameObject.SetActive(true);
             if (!isLeft) 
             { 
                 target.transform.localPosition += new Vector3(targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime); 
@@ -127,6 +128,8 @@ public class Player : MonoBehaviour
         deadTime += Time.deltaTime;
         holdingTime = 0;
         targetSpeed = defaultSpeed;
+        target.gameObject.SetActive(false);
+
     }
     
     public void StartHolding()

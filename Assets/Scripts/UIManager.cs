@@ -11,8 +11,10 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI pointText;
     public List<GameObject> hearts;
 
-    public GameObject gameoverPanel;
+    public GameObject losePanel;
     public GameObject winPanel;
+    public GameObject gameOverPanelWin;
+    public GameObject gameOverPanelLose;
 
     private void Awake()
     {
@@ -33,5 +35,11 @@ public class UIManager : MonoBehaviour
     {
         targetText.text = GameManager.instance.targetCount.ToString();
         pointText.text = GameManager.instance.score.ToString();
+    }
+
+
+    IEnumerator ShowResultPanel(GameObject panel)
+    {
+        yield return new WaitForSeconds(3f);
     }
 }

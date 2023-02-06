@@ -10,8 +10,18 @@ public class CommonScript : MonoBehaviour
         SceneManager.LoadScene(name);
     }
 
+    public void ChangeSceneString(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
+    
     public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
+    }
+
+    public void LevelData(LevelData level)
+    {
+        
     }
 }

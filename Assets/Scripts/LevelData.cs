@@ -17,6 +17,7 @@ public class LevelData : ScriptableObject
     private int bonusTarget;
 
 
+
     public int Pillar
     {
         get { return pillar; }

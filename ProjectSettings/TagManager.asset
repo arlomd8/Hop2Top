@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Plat
   - Item
+  - Background
   layers:
   - Default
   - TransparentFX

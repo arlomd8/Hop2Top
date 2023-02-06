@@ -15,14 +15,18 @@ public class Player : MonoBehaviour
     [Header("Player Attribute")]
     public int healthPoint;
     public bool isLeft;
+    public float deadTime;
+    public float resetTime;
 
     [Header("Target Attribute")]
     public float targetSpeed;
+    public float defaultSpeed;
     public bool isHolding;
     public bool isJump;
     public Vector2 aimLoc;
     public Vector3 worldPos;
-    public float duration;
+    public float holdingTime;
+    public float limitHoldingTime;
 
 
     [Header("Destroyer Attribute")]
@@ -42,27 +46,35 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (!Alive())
+        if (!Alive() && deadTime > resetTime)
         {
             healthPoint--;
             UIManager.instance.hearts[healthPoint].SetActive(false);
             GameManager.instance.ResetPlayerPosition();
 
-            if (healthPoint < 1) { UIManager.instance.gameoverPanel.SetActive(true); }
+            if (healthPoint < 1) { UIManager.instance.losePanel.SetActive(true); }
         }
 
-
-        if (isHolding && !isLeft) 
-        { 
-            target.transform.localPosition += new Vector3(targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime); 
-        }
-        else if(isHolding && isLeft)
+        if (isHolding)
         {
-            target.transform.localPosition += new Vector3(-targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime);
+            if (!isLeft) 
+            { 
+                target.transform.localPosition += new Vector3(targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime); 
+            }
+            else 
+            { 
+                target.transform.localPosition += new Vector3(-targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime); 
+            }
+
+            holdingTime += Time.deltaTime;
+
+            if(holdingTime > limitHoldingTime) { targetSpeed = 0; }
+
+            deadTime = 0;
         }
         else
         {
-            ResetTarget();  
+            ResetTarget();
         }
 
     }
@@ -102,6 +114,9 @@ public class Player : MonoBehaviour
     public void ResetTarget()
     {
         target.transform.localPosition = rotator.localPosition;
+        deadTime += Time.deltaTime;
+        holdingTime = 0;
+        targetSpeed = defaultSpeed;
     }
     
     public void StartHolding()
@@ -113,6 +128,8 @@ public class Player : MonoBehaviour
     {
         isHolding = false;
     }
+
+
 
     public void DecreaseTargetCount()
     {

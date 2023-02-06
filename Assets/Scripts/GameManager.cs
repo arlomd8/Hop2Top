@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> platforms;
     public float yPlatPos;
     public float xPlatPos;
+    public float platPosXY;
     public GameObject platPrefab;
     public int lastPlatforms;
 
@@ -55,18 +57,21 @@ public class GameManager : MonoBehaviour
                     if (platforms[i + 1].GetComponent<Platform>().platformType == PlatformType.Right)
                     {
                         player.isLeft = false;
+                        player.GetComponent<SpriteRenderer>().flipX = false;
                     }
                     else
                     {
                         player.isLeft = true;
+                        player.GetComponent<SpriteRenderer>().flipX = true;
                     }
                 }
                 catch(ArgumentOutOfRangeException)
                 {
-                    //Menang Cuy 
                     continue;
                 }
             }
+
+            //if (lastPlatforms < i) { platforms[i].GetComponent<Collider2D>().isTrigger = true; }
         }
 
         if (lastPlatforms == platformCount - 1 && !isWin)
@@ -127,15 +132,15 @@ public class GameManager : MonoBehaviour
 
             if(x == (int)(PlatformType.Right))
             {
-                newPlat.transform.position = new Vector3(xPlatPos += 1.5f, yPlatPos, 0);
+                newPlat.transform.position = new Vector3(xPlatPos += platPosXY, yPlatPos, 0);
                 newPlat.GetComponent<Platform>().platformType = PlatformType.Right;
             }
             else
             {
-                newPlat.transform.position = new Vector3(xPlatPos -= 1.5f, yPlatPos, 0);
+                newPlat.transform.position = new Vector3(xPlatPos -= platPosXY, yPlatPos, 0);
                 newPlat.GetComponent<Platform>().platformType = PlatformType.Left;
             }
-            yPlatPos += 1.5f;
+            yPlatPos += platPosXY;
         }
     }
 }

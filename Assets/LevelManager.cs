@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static LevelManager instance;
+    public LevelData levelData;
+
+    public List<bool> levelCompleted;
+
+    private void Awake()
     {
-        
+        if (instance == null) { instance = this; }
+        else Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

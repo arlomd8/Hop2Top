@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public int bonusTarget;
     public int platformCount;
     public bool isWin;
+    public bool levelCompleted;
 
     [Header("PLATFORMS")]
     public List<GameObject> platforms;
@@ -36,13 +37,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
+        levelData = LevelManager.instance.levelData;
+
 
         AssignLevelData();
         SpawnPlatform(platformCount);
         AddPlatformToList();
         SpawnPlayer();
         SpawnItem(bonusTarget);
-        
     }
 
     private void Update()
@@ -141,6 +143,19 @@ public class GameManager : MonoBehaviour
                 newPlat.GetComponent<Platform>().platformType = PlatformType.Left;
             }
             yPlatPos += platPosXY;
+        }
+    }
+
+    public void LevelCompleted()
+    {
+        if (levelData.name == "Level 1")
+        {
+            LevelManager.instance.levelCompleted[0] = true;
+        }
+
+        if (levelData.name == "Level 2")
+        {
+            LevelManager.instance.levelCompleted[1] = true;
         }
     }
 }

@@ -2,7 +2,6 @@ using System.Buffers.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
@@ -17,6 +16,9 @@ public class Player : MonoBehaviour
     public bool isLeft;
     public float deadTime;
     public float resetTime;
+    private Rigidbody2D rb;
+    public float jumpForce;
+    public float swingForce;
 
     [Header("Target Attribute")]
     public float targetSpeed;
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         healthPoint = UIManager.instance.hearts.Count;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -52,7 +55,10 @@ public class Player : MonoBehaviour
             UIManager.instance.hearts[healthPoint].SetActive(false);
             GameManager.instance.ResetPlayerPosition();
 
-            if (healthPoint < 1) { UIManager.instance.losePanel.SetActive(true); }
+            if (healthPoint < 1) 
+            { 
+                UIManager.instance.losePanel.SetActive(true); 
+            }
         }
 
         if (isHolding)
@@ -68,7 +74,10 @@ public class Player : MonoBehaviour
 
             holdingTime += Time.deltaTime;
 
-            if(holdingTime > limitHoldingTime) { targetSpeed = 0; }
+            if(holdingTime > limitHoldingTime) 
+            { 
+                targetSpeed = 0; 
+            }
 
             deadTime = 0;
         }
@@ -79,22 +88,7 @@ public class Player : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
-    {
-        if (isJump)
-        {
-            //transform.position = new Vector2(transform.position, worldPos, 10 * Time.deltaTime);
-            
-
-            //duration += Time.deltaTime;
-            //duration = duration % 5f;
-
-            //if(duration % 5f > 0)
-            //{
-            //    transform.position = MathParabola.Parabola(transform.position, worldPos, 0.5f, duration / 1f);
-            //}
-        }
-    }
+    
     public void Charging()
     {
     }
@@ -102,10 +96,26 @@ public class Player : MonoBehaviour
     {
         aimLoc = target.transform.localPosition;
         worldPos = transform.localToWorldMatrix.MultiplyPoint3x4(aimLoc);
-        transform.position = worldPos;
+
+        swingForce = holdingTime / 1f;
+
+        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        if (isLeft)
+        {
+            rb.AddForce(Vector2.left * swingForce, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb.AddForce(Vector2.right * swingForce, ForceMode2D.Impulse);
+        }
+        UIManager.instance.jumpButton.SetActive(false);
         DecreaseTargetCount();
     }
     
+
+
+
+
     public bool Alive()
     {
         return Physics2D.OverlapCircle(detectionPoint.position, detectionRadius, platLayer);

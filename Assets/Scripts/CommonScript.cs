@@ -22,6 +22,8 @@ public class CommonScript : MonoBehaviour
 
     public void LevelData(LevelData level)
     {
-        
+        FindObjectOfType<LevelManager>().levelData = level;
+        ChangeSceneString("Level");
     }
+
 }

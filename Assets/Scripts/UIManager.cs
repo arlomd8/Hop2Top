@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject winPanel;
     public GameObject gameOverPanelWin;
     public GameObject gameOverPanelLose;
+    public GameObject jumpButton;
 
     private void Awake()
     {

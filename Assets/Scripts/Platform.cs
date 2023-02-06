@@ -19,7 +19,7 @@ public class Platform : MonoBehaviour
             collision.gameObject.GetComponent<Player>().isJump = false;
             isDetectPlayer = true;
             effect.SetActive(true);
-
+            UIManager.instance.jumpButton.SetActive(true);
             //collision.gameObject.GetComponent<Player>().destroyLoc = collision.gameObject.GetComponent<Player>().destroyer.transform.localPosition;
             //collision.gameObject.GetComponent<Player>().destroyPos = collision.gameObject.GetComponent<Player>().transform.localToWorldMatrix.MultiplyPoint3x4(collision.gameObject.GetComponent<Player>().destroyLoc);
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
@@ -9,7 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public LevelData levelData;
-    private Player player;
+    public Player player;
 
     [Header("LEVEL")]
     public int score;
@@ -59,12 +60,12 @@ public class GameManager : MonoBehaviour
                     if (platforms[i + 1].GetComponent<Platform>().platformType == PlatformType.Right)
                     {
                         player.isLeft = false;
-                        player.GetComponent<SpriteRenderer>().flipX = false;
+                        player.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = false;
                     }
                     else
                     {
                         player.isLeft = true;
-                        player.GetComponent<SpriteRenderer>().flipX = true;
+                        player.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = true;
                     }
                 }
                 catch(ArgumentOutOfRangeException)
@@ -72,8 +73,6 @@ public class GameManager : MonoBehaviour
                     continue;
                 }
             }
-
-            //if (lastPlatforms < i) { platforms[i].GetComponent<Collider2D>().isTrigger = true; }
         }
 
         if (lastPlatforms == platformCount - 1 && !isWin)

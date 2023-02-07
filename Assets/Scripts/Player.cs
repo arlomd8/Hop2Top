@@ -62,11 +62,14 @@ public class Player : MonoBehaviour
             { 
                 UIManager.instance.losePanel.SetActive(true); 
             }
+            if(healthPoint < 2)
+            {
+                UIManager.instance.panelWarning.SetActive(true);
+            }
         }
 
         if (isHolding)
         {
-            //target.gameObject.SetActive(true);
             if (!isLeft) 
             { 
                 target.transform.localPosition += new Vector3(targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime); 
@@ -75,16 +78,15 @@ public class Player : MonoBehaviour
             { 
                 target.transform.localPosition += new Vector3(-targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime); 
             }
+            target.gameObject.SetActive(true);
 
-            
             holdingTime += Time.deltaTime;
-            //animator.SetFloat("Squeeze", holdingTime);
+            animator.SetFloat("SqueezeValue", holdingTime);
 
 
             if(holdingTime > limitHoldingTime) 
             { 
                 targetSpeed = 0;
-                //animator.SetFloat("Squeeze", 0);
             }
 
             deadTime = 0;
@@ -119,24 +121,19 @@ public class Player : MonoBehaviour
         UIManager.instance.jumpButton.SetActive(false);
         DecreaseTargetCount();
     }
-    
-
-
-
 
     public bool Alive()
     {
         return Physics2D.OverlapCircle(detectionPoint.position, detectionRadius, platLayer);
-
     }
     public void ResetTarget()
     {
+        target.gameObject.SetActive(false);
         target.transform.localPosition = rotator.localPosition;
         deadTime += Time.deltaTime;
         holdingTime = 0;
         targetSpeed = defaultSpeed;
-        //target.gameObject.SetActive(false);
-
+        animator.SetFloat("SqueezeValue", 0);
     }
     
     public void StartHolding()

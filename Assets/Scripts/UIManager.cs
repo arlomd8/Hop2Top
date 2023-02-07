@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public GameObject gameOverPanelLose;
     public GameObject jumpButton;
     public GameObject tutorialPanel;
+    public GameObject panelWarning;
 
     private void Awake()
     {
@@ -33,11 +34,11 @@ public class UIManager : MonoBehaviour
 
         if(GameManager.instance.levelData.name != "Level 1")
         {
-            //tutorialPanel.SetActive(false);
+            tutorialPanel.SetActive(false);
         }
         else
         {
-            //tutorialPanel.SetActive(true);
+            tutorialPanel.SetActive(true);
         }
     }
 
@@ -46,6 +47,7 @@ public class UIManager : MonoBehaviour
     {
         targetText.text = GameManager.instance.targetCount.ToString();
         pointText.text = GameManager.instance.score.ToString();
+
     }
 
 

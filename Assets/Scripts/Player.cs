@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public Transform target;
     public Transform rotator;
     public Transform destroyer;
+    public Animator animator;
+    private float squeezeValue;
 
     [Header("Player Attribute")]
     public int healthPoint;
@@ -45,6 +47,7 @@ public class Player : MonoBehaviour
     {
         healthPoint = UIManager.instance.hearts.Count;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -63,7 +66,7 @@ public class Player : MonoBehaviour
 
         if (isHolding)
         {
-            target.gameObject.SetActive(true);
+            //target.gameObject.SetActive(true);
             if (!isLeft) 
             { 
                 target.transform.localPosition += new Vector3(targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime); 
@@ -73,11 +76,15 @@ public class Player : MonoBehaviour
                 target.transform.localPosition += new Vector3(-targetSpeed * Time.deltaTime, targetSpeed * Time.deltaTime); 
             }
 
+            
             holdingTime += Time.deltaTime;
+            //animator.SetFloat("Squeeze", holdingTime);
+
 
             if(holdingTime > limitHoldingTime) 
             { 
-                targetSpeed = 0; 
+                targetSpeed = 0;
+                //animator.SetFloat("Squeeze", 0);
             }
 
             deadTime = 0;
@@ -128,7 +135,7 @@ public class Player : MonoBehaviour
         deadTime += Time.deltaTime;
         holdingTime = 0;
         targetSpeed = defaultSpeed;
-        target.gameObject.SetActive(false);
+        //target.gameObject.SetActive(false);
 
     }
     

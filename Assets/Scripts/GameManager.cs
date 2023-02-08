@@ -148,12 +148,20 @@ public class GameManager : MonoBehaviour
     {
         if (levelData.name == "Level 1")
         {
-            LevelManager.instance.levelCompleted[0] = true;
+
+            if(LevelManager.instance.cumulativeScore > 100) 
+            { 
+                LevelManager.instance.levelCompleted[0] = true; 
+            }
+            
         }
 
         if (levelData.name == "Level 2")
         {
-            LevelManager.instance.levelCompleted[1] = true;
+            if (LevelManager.instance.cumulativeScore > 300)
+            {
+                LevelManager.instance.levelCompleted[1] = true;
+            }
         }
     }
 }

@@ -21,7 +21,15 @@ public class ResultPanel : MonoBehaviour
     {
         scoreText.text = UIManager.instance.pointText.text;
         levelText.text = GameManager.instance.levelData.name;
-        StartCoroutine(ShowGameOverPanel());    
+        StartCoroutine(ShowGameOverPanel());
+        if (isWin) 
+        { 
+            FindObjectOfType<AudioManager>().Play("Win"); 
+        }
+        else 
+        { 
+            FindObjectOfType<AudioManager>().Play("Lose"); 
+        }
     }
 
     IEnumerator ShowGameOverPanel()
@@ -32,20 +40,22 @@ public class ResultPanel : MonoBehaviour
         countdownText.text = $"lanjut dalam ({time} detik)";
         StartCoroutine(ShowGameOverPanel());
 
-
         if (time == 0)
         {
             if (isWin)
             {
                 GameManager.instance.score += 100;
-                scoreText.text = GameManager.instance.score.ToString();
+                LevelManager.instance.cumulativeScore += GameManager.instance.score;
+                scoreText.text = LevelManager.instance.cumulativeScore.ToString();
+            }
+            else
+            {
+                LevelManager.instance.cumulativeScore += GameManager.instance.score;
+                scoreText.text = LevelManager.instance.cumulativeScore.ToString(); 
             }
             scoreTextGameOver.text = scoreText.text;
             levelTextGameOver.text = levelText.text;
             gameOverPanel.SetActive(true);
         }
-        
-
-
     }
 }

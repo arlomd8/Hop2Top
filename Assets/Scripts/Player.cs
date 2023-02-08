@@ -11,7 +11,9 @@ public class Player : MonoBehaviour
     public Transform rotator;
     public Transform destroyer;
     public Animator animator;
-    private float squeezeValue;
+    public Transform cam;
+
+    public float zOffset;
 
     [Header("Player Attribute")]
     public int healthPoint;
@@ -98,8 +100,19 @@ public class Player : MonoBehaviour
         }
 
     }
+    private void FixedUpdate()
+    {
+        if (isLeft)
+        {
+            cam.transform.localPosition = Vector2.Lerp(cam.transform.localPosition, new Vector3(-6, 0, zOffset), Time.deltaTime);
+        }
+        else
+        {
+            cam.transform.localPosition = Vector2.Lerp(cam.transform.localPosition, new Vector3(6, 0, zOffset), Time.deltaTime);
+        }
+    }
 
-    
+
     public void Charging()
     {
     }
@@ -113,6 +126,7 @@ public class Player : MonoBehaviour
 
         if (holdingTime > 0.5f)
         {
+            FindObjectOfType<AudioManager>().Play("Jump");
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             if (isLeft)
             {

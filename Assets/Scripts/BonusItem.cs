@@ -10,6 +10,7 @@ public class BonusItem : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            FindObjectOfType<AudioManager>().Play("Item");
             GameManager.instance.targetCount += 1;
             GameManager.instance.score += 10;
             Instantiate(itemAnimated, transform.position, Quaternion.identity);

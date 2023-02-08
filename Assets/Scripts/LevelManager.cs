@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
 
     public List<bool> levelCompleted;
 
+    public int cumulativeScore;
+
     private void Awake()
     {
         if (instance == null) { instance = this; }

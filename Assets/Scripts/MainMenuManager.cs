@@ -8,10 +8,6 @@ public class MainMenuManager : MonoBehaviour
 {
     public List<Button> buttons;
 
-    private void Start()
-    {
-        
-    }
     public void Update()
     {
         if (LevelManager.instance != null)

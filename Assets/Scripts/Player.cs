@@ -111,10 +111,6 @@ public class Player : MonoBehaviour
         }
     }
 
-        
-    public void Charging()
-    {
-    }
     public void Jump()
     {   
         

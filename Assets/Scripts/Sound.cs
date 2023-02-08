@@ -9,6 +9,5 @@ public class Sound
     public bool loop;
     public bool onAwake;
     [Range(0f, 1f)] public float volume;
-    //public bool oneShot;
 
 }

@@ -12,8 +12,7 @@ public class Player : MonoBehaviour
     public Transform destroyer;
     public Animator animator;
     public Transform cam;
-
-    public float zOffset;
+    public Vector3 offset;
 
     [Header("Player Attribute")]
     public int healthPoint;
@@ -104,15 +103,15 @@ public class Player : MonoBehaviour
     {
         if (isLeft)
         {
-            cam.transform.localPosition = Vector2.Lerp(cam.transform.localPosition, new Vector3(-6, 0, zOffset), Time.deltaTime);
+            cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, new Vector3(-offset.x, offset.y, offset.z), Time.deltaTime);
         }
         else
         {
-            cam.transform.localPosition = Vector2.Lerp(cam.transform.localPosition, new Vector3(6, 0, zOffset), Time.deltaTime);
+            cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, new Vector3(offset.x, offset.y, offset.z), Time.deltaTime);
         }
     }
 
-
+        
     public void Charging()
     {
     }

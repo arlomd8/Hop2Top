@@ -19,7 +19,7 @@ public class Loading : MonoBehaviour
         
         if (i < 100)
         {
-            i += 0.05f;
+            i += Time.deltaTime * 50f;
             text.text = $"Preparing the game: {i.ToString("00")}%";
         }
         else

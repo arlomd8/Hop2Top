@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
 
         if (levelData.name == "Level 2")
         {
-            if (LevelManager.instance.cumulativeScore > 300)
+            if (LevelManager.instance.cumulativeScore > 200)
             {
                 LevelManager.instance.levelCompleted[1] = true;
             }

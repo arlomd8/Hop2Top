@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3debc201baf749c47b2724120279070d, type: 3}
   m_Name: Level 2
   m_EditorClassIdentifier: 
-  pillar: 16
+  pillar: 21
   target: 3
-  bonusTarget: 3
+  bonusTarget: 4

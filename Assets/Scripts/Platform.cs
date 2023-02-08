@@ -8,7 +8,7 @@ public class Platform : MonoBehaviour
     public bool isDetectPlayer;
     public GameObject effect;
     public bool isAlreadyStepped;
-
+    
 
 
     private void OnCollisionEnter2D(Collision2D collision)

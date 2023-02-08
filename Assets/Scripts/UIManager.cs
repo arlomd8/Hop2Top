@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public GameObject jumpButton;
     public GameObject tutorialPanel;
     public GameObject panelWarning;
+    public GameObject scoreEffectText;
 
     private void Awake()
     {

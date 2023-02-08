@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour
     void GameWin()
     {
         isWin = true;
-        GameManager.instance.score += 100;
         UIManager.instance.winPanel.SetActive(true);
     }
 
@@ -100,7 +99,7 @@ public class GameManager : MonoBehaviour
 
     void SpawnItem(int count)
     {
-        int pos = 0;
+        int pos = 0;    
         for (int i = 1; i <= count; i++)
         {
             var newItem = Instantiate(itemPrefab, transform.position, Quaternion.identity);

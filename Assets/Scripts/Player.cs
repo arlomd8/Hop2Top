@@ -83,6 +83,7 @@ public class Player : MonoBehaviour
             holdingTime += Time.deltaTime;
             animator.SetFloat("SqueezeValue", holdingTime);
 
+           
 
             if(holdingTime > limitHoldingTime) 
             { 
@@ -103,23 +104,28 @@ public class Player : MonoBehaviour
     {
     }
     public void Jump()
-    {
+    {   
+        
         aimLoc = target.transform.localPosition;
         worldPos = transform.localToWorldMatrix.MultiplyPoint3x4(aimLoc);
 
         swingForce = holdingTime / 1f;
 
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        if (isLeft)
+        if (holdingTime > 0.5f)
         {
-            rb.AddForce(Vector2.left * swingForce, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            if (isLeft)
+            {
+                rb.AddForce(Vector2.left * swingForce, ForceMode2D.Impulse);
+            }
+            else
+            {
+                rb.AddForce(Vector2.right * swingForce, ForceMode2D.Impulse);
+            }
+            UIManager.instance.jumpButton.SetActive(false);
+            DecreaseTargetCount();
         }
-        else
-        {
-            rb.AddForce(Vector2.right * swingForce, ForceMode2D.Impulse);
-        }
-        UIManager.instance.jumpButton.SetActive(false);
-        DecreaseTargetCount();
+        
     }
 
     public bool Alive()

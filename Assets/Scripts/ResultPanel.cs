@@ -14,6 +14,7 @@ public class ResultPanel : MonoBehaviour
     public TextMeshProUGUI levelTextGameOver;
 
     public int time;
+    public bool isWin;
 
 
     public void Start()
@@ -34,6 +35,11 @@ public class ResultPanel : MonoBehaviour
 
         if (time == 0)
         {
+            if (isWin)
+            {
+                GameManager.instance.score += 100;
+                scoreText.text = GameManager.instance.score.ToString();
+            }
             scoreTextGameOver.text = scoreText.text;
             levelTextGameOver.text = levelText.text;
             gameOverPanel.SetActive(true);

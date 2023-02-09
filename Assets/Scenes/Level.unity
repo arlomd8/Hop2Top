@@ -9727,7 +9727,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: WELL DONE!
+  m_text: COBA LAGI!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ee70608ee6b2b63489f690aefc9f2cde, type: 2}
   m_sharedMaterial: {fileID: -3268375269279171825, guid: ee70608ee6b2b63489f690aefc9f2cde, type: 2}
